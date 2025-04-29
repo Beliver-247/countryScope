@@ -1,5 +1,145 @@
+/* Global styles for consistent typography, spacing, and theme support */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-bg: #f9fafb;
+  --primary-text: #1f2937;
+  --secondary-bg: #ffffff;
+  --accent-color: #3b82f6;
+  --border-color: #d1d5db;
+  --input-text: #1f2937;
+}
 
+[data-theme="dark"] {
+  --primary-bg: #1f2937;
+  --primary-text: #f3f4f6;
+  --secondary-bg: #374151;
+  --accent-color: #60a5fa;
+  --border-color: #6b7280;
+  --input-text: #ffffff;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  margin: 0;
+  min-height: 100vh;
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+    @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-500 ease-in-out transform hover:shadow-xl hover:scale-105;
+  }
+
+.detail-card {
+  @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-colors duration-400 ease-in-out;
+}
+
+.button {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors duration-400 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--accent-color)];
+}
+
+.modal {
+  @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-300 ease-in-out;
+}
+
+h1, h2, h3 {
+  @apply font-bold;
+}
+
+a {
+  @apply text-[var(--accent-color)] hover:underline;
+}
+
+/* Prevent underline on CountryCard links */
+.card a {
+  @apply hover:no-underline;
+}
+
+/* Input and select styles for consistency */
+input, select {
+  @apply bg-[var(--secondary-bg)] text-[var(--input-text)] border border-[var(--border-color)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] transition-colors duration-400 ease-in-out shadow-sm;
+}
+
+input::placeholder {
+  @apply text-[var(--border-color)] opacity-80;
+}
+
+/* Scrollbar styles for consistency */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[var(--primary-bg)];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[var(--accent-color)] rounded-full;
+}
+
+/* Toast styles */
+.Toastify__toast {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary-bg);
+  color: var(--primary-text);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease-in-out;
+}
+
+.Toastify__toast--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.Toastify__toast--error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.Toastify__toast--warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.Toastify__toast--info {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.Toastify__close-button {
+  color: var(--primary-text);
+  opacity: 0.7;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-lg;
+  }
+  .container {
+    @apply px-4;
+  }
+  .Toastify__toast {
+    margin: 8px;
+    font-size: 14px;
+  }
+}

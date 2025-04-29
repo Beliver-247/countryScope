@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import CountryCard from "../components/CountryCard";
-import LanguageFilter from "../components/LanguageFilter";
-import { toast } from "react-toastify";
-import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { getFavorites, addFavorite, removeFavorite } from "../firebase/favoriteHelpers";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import CountryCard from '../components/CountryCard';
+import LanguageFilter from '../components/LanguageFilter';
+import { toast } from 'react-toastify';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getFavorites, addFavorite, removeFavorite } from '../firebase/favoriteHelpers';
+import SearchBar from '../components/SearchBar';
+import RegionFilter from '../components/RegionFilter';
 
 function Home() {
   const [countries, setCountries] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [region, setRegion] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [region, setRegion] = useState('');
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [languages, setLanguages] = useState([]);
-
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
@@ -33,7 +34,7 @@ function Home() {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get("https://restcountries.com/v3.1/all");
+      const response = await axios.get('https://restcountries.com/v3.1/all');
       setCountries(response.data);
 
       const langsSet = new Set();
@@ -44,7 +45,8 @@ function Home() {
       });
       setLanguages(Array.from(langsSet).sort());
     } catch (error) {
-      console.error("Error fetching countries:", error);
+      console.error('Error fetching countries:', error);
+      toast.error('Failed to fetch countries.');
     }
   };
 
@@ -52,25 +54,28 @@ function Home() {
     if (user) {
       addFavorite(user.uid, countryCode);
       setFavorites((prev) => [...prev, countryCode]);
-      toast.success("Added to favorites!");
+      toast.success('Added to favorites!');
     } else {
-      toast.warning("Please log in to add favorites");
+      toast.warning('Please log in to add favorites');
     }
   };
-  
+
   const handleRemoveFavorite = (countryCode) => {
     if (user) {
       removeFavorite(user.uid, countryCode);
       setFavorites((prev) => prev.filter((code) => code !== countryCode));
-      toast.info("Removed from favorites!");
+      toast.info('Removed from favorites!');
     }
   };
 
   const filteredCountries = countries.filter((country) => {
-    const matchesSearch = country.name.common.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = country.name.common
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesRegion = region ? country.region === region : true;
-
-    const countryLanguages = country.languages ? Object.values(country.languages) : [];
+    const countryLanguages = country.languages
+      ? Object.values(country.languages)
+      : [];
     const matchesLanguages =
       selectedLanguages.length === 0 ||
       selectedLanguages.every((lang) => countryLanguages.includes(lang));
@@ -79,49 +84,46 @@ function Home() {
   });
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">🌍 Explore Countries</h1>
+    <div className="py-6">
+      <div className="container">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+          Explore Countries
+        </h1>
 
-      {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          className="p-2 border rounded w-full md:w-1/2"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select
-          value={region}
-          onChange={(e) => setRegion(e.target.value)}
-          className="p-2 border rounded w-full md:w-1/4"
-        >
-          <option value="">All Regions</option>
-          <option value="Africa">Africa</option>
-          <option value="Americas">Americas</option>
-          <option value="Asia">Asia</option>
-          <option value="Europe">Europe</option>
-          <option value="Oceania">Oceania</option>
-        </select>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mb-8">
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={setSearchTerm}
+            className="w-full sm:w-1/3"
+          />
+          <RegionFilter
+            region={region}
+            onFilter={setRegion}
+            className="w-full sm:w-1/4"
+          />
+          <LanguageFilter
+            selectedLanguages={selectedLanguages}
+            onChange={setSelectedLanguages}
+            languages={languages}
+            className="w-full sm:w-1/2"
+          />
+        </div>
 
-        <LanguageFilter
-          selectedLanguages={selectedLanguages}
-          onChange={setSelectedLanguages}
-          languages={languages}
-        />
-      </div>
-
-      {/* Country Cards */}
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {filteredCountries.map((country) => (
-  <CountryCard
-    key={country.cca3}
-    country={country}
-    isFavorite={favorites.includes(country.cca3)}
-    onAddFavorite={handleAddFavorite}
-    onRemoveFavorite={handleRemoveFavorite}
-  />
-))}
+        {filteredCountries.length > 0 ? (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {filteredCountries.map((country) => (
+              <CountryCard
+                key={country.cca3}
+                country={country}
+                isFavorite={favorites.includes(country.cca3)}
+                onAddFavorite={handleAddFavorite}
+                onRemoveFavorite={handleRemoveFavorite}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center mt-12">No countries match your filters.</p>
+        )}
       </div>
     </div>
   );
