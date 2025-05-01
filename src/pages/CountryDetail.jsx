@@ -85,7 +85,8 @@ const CountryDetail = () => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="card relative overflow-hidden">
+        <div className="card-no-hover relative overflow-hidden">
+
             <div className="w-full h-64 sm:h-80 bg-[var(--primary-bg)] rounded-t-2xl flex items-center justify-center">
               <img
                 src={country.flags.svg}

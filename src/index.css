@@ -40,6 +40,10 @@ html, body {
     @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-500 ease-in-out transform hover:shadow-xl hover:scale-105;
   }
 
+  .card-no-hover {
+    @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md;
+  }
+  
 .detail-card {
   @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-colors duration-400 ease-in-out;
 }
