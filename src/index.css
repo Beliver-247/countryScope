@@ -12,6 +12,7 @@
   --accent-color: #3b82f6;
   --border-color: #d1d5db;
   --input-text: #1f2937;
+  --secondary-text: #4b5563; /* New variable for less important text */
 }
 
 [data-theme="dark"] {
@@ -21,6 +22,7 @@
   --accent-color: #60a5fa;
   --border-color: #6b7280;
   --input-text: #ffffff;
+  --secondary-text: #9ca3af; /* Lighter in dark mode */
 }
 
 html, body {
@@ -40,10 +42,6 @@ html, body {
     @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-500 ease-in-out transform hover:shadow-xl hover:scale-105;
   }
 
-  .card-no-hover {
-    @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md;
-  }
-  
 .detail-card {
   @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-colors duration-400 ease-in-out;
 }
