@@ -34,7 +34,8 @@ function Home() {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('https://restcountries.com/v3.1/all');
+      const response = await axios.get('https://restcountries.com/v3.1/all?fields=name,capital,region,flags,population,languages,cca3');
+
       setCountries(response.data);
 
       const langsSet = new Set();
