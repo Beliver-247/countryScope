@@ -7,7 +7,8 @@ const RegionFilter = ({ region, onFilter }) => {
     <select
       value={region}
       onChange={(e) => onFilter(e.target.value)}
-      className="w-full md:w-1/4 p-3"
+      className="w-full p-2.5 text-sm sm:text-base"
+      aria-label="Filter by region"
     >
       <option value="">Filter by Region</option>
       {regions.map((reg) => (

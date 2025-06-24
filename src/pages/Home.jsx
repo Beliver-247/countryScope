@@ -35,9 +35,7 @@ function Home() {
   const fetchCountries = async () => {
     try {
       const response = await axios.get('https://restcountries.com/v3.1/all?fields=name,capital,region,flags,population,languages,cca3');
-
       setCountries(response.data);
-
       const langsSet = new Set();
       response.data.forEach((country) => {
         if (country.languages) {
@@ -85,45 +83,38 @@ function Home() {
   });
 
   return (
-    <div className="py-6">
+    <div className="py-4 sm:py-6">
       <div className="container">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">
           Explore Countries
         </h1>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mb-8">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearch={setSearchTerm}
-            className="w-full sm:w-1/3"
-          />
-          <RegionFilter
-            region={region}
-            onFilter={setRegion}
-            className="w-full sm:w-1/4"
-          />
+        <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <SearchBar searchTerm={searchTerm} onSearch={setSearchTerm} />
+          <RegionFilter region={region} onFilter={setRegion} />
           <LanguageFilter
             selectedLanguages={selectedLanguages}
             onChange={setSelectedLanguages}
             languages={languages}
-            className="w-full sm:w-1/2"
           />
         </div>
 
         {filteredCountries.length > 0 ? (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredCountries.map((country) => (
-              <CountryCard
-                key={country.cca3}
-                country={country}
-                isFavorite={favorites.includes(country.cca3)}
-                onAddFavorite={handleAddFavorite}
-                onRemoveFavorite={handleRemoveFavorite}
-              />
-            ))}
-          </div>
+<div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {filteredCountries.map((country) => (
+    <CountryCard
+      key={country.cca3}
+      country={country}
+      isFavorite={favorites.includes(country.cca3)}
+      onAddFavorite={handleAddFavorite}
+      onRemoveFavorite={handleRemoveFavorite}
+    />
+  ))}
+</div>
         ) : (
-          <p className="text-center mt-12">No countries match your filters.</p>
+          <p className="text-center mt-8 sm:mt-12 text-sm sm:text-base text-[var(--secondary-text)]">
+            No countries match your filters.
+          </p>
         )}
       </div>
     </div>

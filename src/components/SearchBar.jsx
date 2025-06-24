@@ -7,7 +7,8 @@ const SearchBar = ({ searchTerm, onSearch }) => {
       placeholder="Search for a country..."
       value={searchTerm}
       onChange={(e) => onSearch(e.target.value)}
-      className="w-full md:w-1/3 p-3"
+      className="w-full p-2.5 text-sm sm:text-base"
+      aria-label="Search countries"
     />
   );
 };

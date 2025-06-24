@@ -16,11 +16,15 @@ const LanguageFilter = ({ selectedLanguages, onChange, languages }) => {
     }
   };
 
+  const clearFilters = () => {
+    onChange([]);
+  };
+
   return (
-    <div className="relative w-full md:w-1/2">
+    <div className="relative w-full">
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="button w-full p-2 border border-[var(--border-color)] text-left bg-[var(--secondary-bg)] text-[var(--input-text)] shadow-sm"
+        className="button w-full p-2.5 text-left text-sm sm:text-base bg-[var(--secondary-bg)] border border-[var(--border-color)]"
       >
         {selectedLanguages.length > 0
           ? selectedLanguages.join(', ')
@@ -34,19 +38,31 @@ const LanguageFilter = ({ selectedLanguages, onChange, languages }) => {
             placeholder="Search language..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-2 border-b border-[var(--border-color)] bg-[var(--secondary-bg)] text-[var(--input-text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] shadow-sm"
+            className="w-full p-2.5 text-sm sm:text-base border-b border-[var(--border-color)]"
+            aria-label="Search language"
           />
-          <div className="max-h-48 overflow-y-auto">
+
+          {selectedLanguages.length > 0 && (
+            <button
+              onClick={clearFilters}
+              className="w-full text-left text-xs sm:text-sm text-[var(--accent-color)] px-3 py-2 hover:underline"
+            >
+              Clear Filter
+            </button>
+          )}
+
+          <div className="max-h-36 sm:max-h-48 overflow-y-auto">
             {filteredLanguages.map((lang) => (
               <label
                 key={lang}
-                className="flex items-center px-4 py-2 hover:bg-[var(--accent-color)]/10 cursor-pointer text-[var(--input-text)] transition-colors duration-400 ease-in-out"
+                className="flex items-center px-3 py-2 hover:bg-[var(--accent-color)]/10 cursor-pointer text-sm sm:text-base text-[var(--input-text)] transition-colors duration-400"
               >
                 <input
                   type="checkbox"
                   checked={selectedLanguages.includes(lang)}
                   onChange={() => toggleLanguage(lang)}
-                  className="mr-2 accent-[var(--accent-color)]"
+                  className="mr-2 h-4 w-4 sm:h-5 sm:w-5 accent-[var(--accent-color)]"
+                  aria-label={`Toggle ${lang}`}
                 />
                 {lang}
               </label>

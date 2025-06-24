@@ -9,6 +9,9 @@ export default {
       transitionDuration: {
         '400': '400ms',
       },
+      screens: {
+        'xs': '480px', // Custom breakpoint for small mobile screens
+      },
     },
   },
   plugins: [],
