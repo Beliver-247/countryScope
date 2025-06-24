@@ -25,15 +25,13 @@ const Navbar = ({ toggleTheme, theme }) => {
 
   return (
     <nav className="bg-[var(--secondary-bg)] border-b shadow sticky top-0 z-50">
-      <div className="container flex justify-between items-center py-4">
-      <Link to="/" className="text-xl font-bold no-underline hover:no-underline">
-  🌍 Country Scope
-</Link>
-
-
+      <div className="container px-4 sm:px-6 flex justify-between items-center py-3 sm:py-4">
+        <Link to="/" className="text-lg sm:text-xl font-bold no-underline hover:no-underline">
+          🌍 Country Scope
+        </Link>
 
         <button
-          className="md:hidden text-[var(--primary-text)]"
+          className="md:hidden text-[var(--primary-text)] p-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           <svg
@@ -54,18 +52,20 @@ const Navbar = ({ toggleTheme, theme }) => {
         <div
           className={`${
             isOpen ? 'flex' : 'hidden'
-          } md:flex flex-col md:flex-row items-center gap-4 absolute md:static top-16 left-0 w-full md:w-auto bg-[var(--secondary-bg)] md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none`}
+          } md:flex flex-col md:flex-row items-center gap-3 sm:gap-4 absolute md:static top-14 sm:top-16 left-0 w-full md:w-auto bg-[var(--secondary-bg)] md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none`}
         >
-          <Link to="/favorites" className="text-[var(--accent-color)] hover:underline">
+          <Link to="/favorites" className="text-[var(--accent-color)] hover:underline text-sm sm:text-base">
             My Favorites
           </Link>
 
           {user ? (
             <>
-              <span className="text-[var(--primary-text)]">Welcome, {user.email}</span>
+              <span className="text-[var(--primary-text)] text-sm sm:text-base">
+                Welcome, {user.email}
+              </span>
               <button
                 onClick={handleLogout}
-                className="button bg-red-500 text-white hover:bg-red-600"
+                className="button bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-lg text-sm sm:text-base"
               >
                 Logout
               </button>
@@ -74,13 +74,13 @@ const Navbar = ({ toggleTheme, theme }) => {
             <>
               <button
                 onClick={() => setShowLogin(true)}
-                className="button bg-blue-500 text-white hover:bg-blue-600"
+                className="button bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg text-sm sm:text-base"
               >
                 Login
               </button>
               <button
                 onClick={() => setShowRegister(true)}
-                className="button bg-green-500 text-white hover:bg-green-600"
+                className="button bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded-lg text-sm sm:text-base"
               >
                 Register
               </button>

@@ -39,8 +39,8 @@ html, body {
 }
 
 .card {
-    @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-500 ease-in-out transform hover:shadow-xl hover:scale-105;
-  }
+  @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-all duration-500 ease-in-out transform hover:shadow-xl hover:scale-105 w-full;
+}
 
 .detail-card {
   @apply bg-[var(--secondary-bg)] rounded-2xl shadow-md transition-colors duration-400 ease-in-out;
@@ -130,18 +130,26 @@ input::placeholder {
 }
 
 /* Responsive adjustments */
-@media (max-width: 640px) {
-  h1 {
-    @apply text-2xl;
+/* Mobile-specific adjustments */
+@media (max-width: 767px) {
+  .card {
+    @apply max-w-full w-full;
   }
-  h2 {
-    @apply text-lg;
+
+  .card img {
+    @apply h-36 w-full object-contain; /* Ensure flag fits on mobile */
   }
-  .container {
-    @apply px-4;
+
+  .card .p-4 {
+    @apply p-3;
   }
-  .Toastify__toast {
-    margin: 8px;
-    font-size: 14px;
+
+  .button {
+    @apply px-3 py-1 text-sm;
+  }
+
+  select, input {
+    @apply p-2 text-sm;
   }
 }
+
